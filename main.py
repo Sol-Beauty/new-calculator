@@ -349,8 +349,23 @@ def get_size(size: Size):
             if df.loc[156]['Waist'] == size.waist and df.loc[156]['Hips'] == size.hips:
                 return "Tu talla es 12/16"
             else:
-               return "Algo anda mal"
+                return "Algo anda mal"
         case 1:
             return "one"
+        case default:
+            return "something"
+
+
+@app.post("/newcalc", status_code=200)
+def get_new_size(size: Size):
+    match size.type:
+        case 0:
+            df = pd.read_csv('new_jeans_dataset.csv')
+
+            print(df.iloc[0,2])
+        case 1:
+            return "one"
+        case 2:
+            return "two"
         case default:
             return "something"
