@@ -15,8 +15,8 @@ import pandas as pd
 
 class Size(BaseModel):
     type: int
-    waist: int
-    hips: int
+    waist: float
+    hips: float
 
 
 @app.get("/", status_code=200)
@@ -54,16 +54,20 @@ def get_new_size(size: Size):
             WaistIn = df['WaistIn'].to_numpy()
             HipsIn = df['HipsIn'].to_numpy()
             indexesWaistIn = np.where(WaistIn == size.waist)
-            indexIn = indexesWaistIn[1][1]
+            print(size.waist)
+            print(size.hips)
+            print("Indexes WaistIn", indexesWaistIn)
+            indexIn = indexesWaistIn[0]
             resultHips = HipsIn[indexIn]
-            print(resultHips)
+            print("WaistIn", WaistIn)
+            print("HipsIn", HipsIn)
             if resultHips == size.hips:
                 jeans = df['NewJeans'].to_numpy()
                 sizeFinal = jeans[indexIn]
                 print(sizeFinal)
                 return sizeFinal
             else:
-                print("La talla no es la correcta, por favor verifique sus medidas o pongase en contacto con un asesor")
+                return False
         case 2:
             return "two"
         case default:
