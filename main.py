@@ -50,7 +50,20 @@ def get_new_size(size: Size):
                 print("ALGO SALIO MAL")
                 return False
         case 1:
-            return "one"
+            df = pd.read_csv('new_jeans_dataset.csv')
+            WaistIn = df['WaistIn'].to_numpy()
+            HipsIn = df['HipsIn'].to_numpy()
+            indexesWaistIn = np.where(WaistIn == size.waist)
+            indexIn = indexesWaistIn[1][1]
+            resultHips = HipsIn[indexIn]
+            print(resultHips)
+            if resultHips == size.hips:
+                jeans = df['NewJeans'].to_numpy()
+                sizeFinal = jeans[indexIn]
+                print(sizeFinal)
+                return sizeFinal
+            else:
+                print("La talla no es la correcta, por favor verifique sus medidas o pongase en contacto con un asesor")
         case 2:
             return "two"
         case default:
