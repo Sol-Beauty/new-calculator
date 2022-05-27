@@ -49,19 +49,6 @@ def get_new_size(size: Size):
             else:
                 print("ALGO SALIO MAL")
                 return False
-            #resultHips = np.where(HipsCm == size.hips)
-            resultHips = HipsCm
-            resultWaist = WaistCm
-            print(indexesWaist)
-            print(resultHips)
-            result = resultWaist[0][0]
-            result2 = resultHips[0][0]
-            print("The value is", resultHips[result])
-            if result == size.hips and result2 == size.waist:
-                sizeFinal = df['NewJeans'][[resultWaist[0], resultHips[0]]]
-                print(sizeFinal)
-            else:
-                return False
         case 1:
             return "one"
         case 2:
