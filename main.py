@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from NewPredictorController import NewPredictorController
 from pydiator_core.mediatr import pydiator
 import numpy as np
-
+from bottle import response
 app = FastAPI()
 router = APIRouter()
 import pandas as pd
@@ -37,17 +37,31 @@ def get_new_size(size: Size):
             df = pd.read_csv('new_jeans_dataset.csv')
             WaistCm = df['WaistCm'].to_numpy()
             HipsCm = df['HipsCm'].to_numpy()
-            WaistIn = df['WaistIn'].to_numpy()
-            HipsIn = df['HipsIn'].to_numpy()
-            resultWaist = np.where(WaistCm == size.waist)
-            resultHips = np.where(HipsCm == size.hips)
-            print("The index is", resultWaist)
-            print("The index is", resultWaist[0][0])
-            if resultWaist[0][0] == resultHips[0][0]:
-                print(df['NewJeans'][[resultWaist[0][0], resultHips[0][0]]])
-                return "Estan en el mismo indice"
+            indexesWaist = np.where(WaistCm == size.waist)
+            index = indexesWaist[0][0]
+            resultHips = HipsCm[index]
+            print(resultHips)
+            if resultHips == size.hips:
+                jeans = df['NewJeans'].to_numpy()
+                sizeFinal = jeans[index]
+                print(sizeFinal)
+                return sizeFinal
             else:
-                return "Algo anda mal"
+                print("ALGO SALIO MAL")
+                return False
+            #resultHips = np.where(HipsCm == size.hips)
+            resultHips = HipsCm
+            resultWaist = WaistCm
+            print(indexesWaist)
+            print(resultHips)
+            result = resultWaist[0][0]
+            result2 = resultHips[0][0]
+            print("The value is", resultHips[result])
+            if result == size.hips and result2 == size.waist:
+                sizeFinal = df['NewJeans'][[resultWaist[0], resultHips[0]]]
+                print(sizeFinal)
+            else:
+                return False
         case 1:
             return "one"
         case 2:
