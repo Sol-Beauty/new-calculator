@@ -361,8 +361,11 @@ def get_new_size(size: Size):
     match size.type:
         case 0:
             df = pd.read_csv('new_jeans_dataset.csv')
-
-            print(df.iloc[0,2])
+            for columnWaist in df['Waist']:
+                if size.waist in columnWaist:
+                    return "Si hay"
+                else:
+                    return "Nel"
         case 1:
             return "one"
         case 2:
