@@ -2,10 +2,9 @@ import json
 from typing import Union
 
 import numpy
-from fastapi import FastAPI, status, APIRouter
+from fastapi import FastAPI, status, APIRouter, HTTPException
 from pydantic import BaseModel
 from NewPredictorController import NewPredictorController
-from pydiator_core.mediatr import pydiator
 import numpy as np
 from bottle import response
 app = FastAPI()
@@ -47,7 +46,7 @@ def get_new_size(size: Size):
                 print(sizeFinal)
                 return sizeFinal
             else:
-                print("ALGO SALIO MAL")
+                raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
                 return False
         case 1:
             df = pd.read_csv('new_jeans_dataset.csv')
@@ -67,8 +66,7 @@ def get_new_size(size: Size):
                 print(sizeFinal)
                 return sizeFinal
             else:
+                raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
                 return False
-        case 2:
-            return "two"
         case default:
-            return "something"
+            raise HTTPException(status_code=404, detail="No hay o existe una opcion por favor elija una para continuar")
