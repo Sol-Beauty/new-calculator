@@ -1,17 +1,16 @@
-
-import numpy
-from fastapi import FastAPI, status, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
 
 from app.NewPredictorController import NewPredictorController
 import numpy as np
+import pandas as pd
 
 app = FastAPI(
     title="FastAPI Pydiator",
     description="FastAPI pydiator integration project",
     version="1.0.0",
-   # root_path="/predictor",
+    # root_path="/predictor",
 )
 
 app.add_middleware(
@@ -22,7 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 router = APIRouter()
-import pandas as pd
 
 
 class Size(BaseModel):
@@ -30,6 +28,7 @@ class Size(BaseModel):
     waist: float
     hips: float
     measure_type: str
+
 
 @app.get("/", status_code=200)
 def read_root():
@@ -61,7 +60,6 @@ def get_new_size(size: Size):
                 return sizeFinal
             else:
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
-                return False
 
         case 1:
             df = pd.read_csv('new_jeans_dataset.csv')
