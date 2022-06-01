@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  api:
+    image: development/fastapi-size-calculator:1.0.0
+    env_file:
+      - .env
+    networks:
+      - calculator-net
+      - traefik-public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+        - "traefik.constraint-label=traefik-public"
+        - "traefik.http.routers.api-calculator-http.rule=Host(`ws.solbeautyandcare.com`) && PathPrefix(`/calculator`)"
+        - "traefik.http.routers.api-calculator-https.middlewares=calculator-stripprefix"
+        - "traefik.http.middlewares.calculator-stripprefix.stripprefix.forceslash=true"
+        - "traefik.http.middlewares.calculator-stripprefix.stripprefix.prefixes=/calculator"
+        - "traefik.http.routers.api-calculator-http.entrypoints=http"
+        - "traefik.http.routers.api-calculator-http.middlewares=https-redirect"
+        - "traefik.http.routers.api-calculator-https.rule=Host(`ws.solbeautyandcare.com`) && PathPrefix(`/calculator`)"
+        - "traefik.http.routers.api-calculator-https.entrypoints=https"
+        - "traefik.http.routers.api-calculator-https.tls=true"
+        - "traefik.http.routers.api-calculator-https.tls.certresolver=le"
+        - "traefik.http.services.api-calculator.loadbalancer.server.port=5000"
+
+networks:
+  calculator-net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true
