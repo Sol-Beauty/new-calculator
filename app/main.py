@@ -1,17 +1,22 @@
+
 import json
 
 from fastapi import FastAPI, status, APIRouter, HTTPException
+
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
 
 from app.NewPredictorController import NewPredictorController
 import numpy as np
+import pandas as pd
 
 app = FastAPI(
     title="FastAPI Pydiator",
     description="FastAPI pydiator integration project",
     version="1.0.0",
+
     # root_path="/predictor",
+
 )
 
 app.add_middleware(
@@ -22,7 +27,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 router = APIRouter()
-import pandas as pd
 
 
 class Size(BaseModel):
@@ -45,6 +49,7 @@ def get_columns():
 
 @app.post("/v2/newcalc", status_code=200)
 def get_new_size(size: Size):
+
     match size.type:
         # For the new one
         case 0:
