@@ -44,7 +44,7 @@ def get_columns():
 @app.post("/v2/newcalc", status_code=200)
 def get_new_size(size: Size):
     if size.type == 0:
-        df = pd.read_csv('/app/new_jeans_dataset.csv')
+        df = pd.read_csv('/app/app/new_jeans_dataset.csv')
         WaistCm = df['WaistCm'].to_numpy()
         HipsCm = df['HipsCm'].to_numpy()
         indexesWaist = np.where(WaistCm == size.waist)
@@ -59,7 +59,7 @@ def get_new_size(size: Size):
         else:
             raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
     if size.type == 1:
-        df = pd.read_csv('/app/new_jeans_dataset.csv')
+        df = pd.read_csv('/app/app/new_jeans_dataset.csv')
         WaistCm = df['WaistCm'].to_numpy()
         HipsCm = df['HipsCm'].to_numpy()
         indexesWaist = np.where(WaistCm == size.waist)
