@@ -1,5 +1,5 @@
 # pull python image as base compile
-FROM python:3.10 as requirements-stage
+FROM python:3.9 as requirements-stage
 
 # set up the tem director
 WORKDIR /tmp
@@ -12,7 +12,7 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 # deploy stage
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
 # environment setup from build stage
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt

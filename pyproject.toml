@@ -5,7 +5,7 @@ description = ""
 authors = ["Kenneth Betancourt <kenneth_betancourt@solbeautyandcare.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 fastapi = "^0.78.0"
 pytest = "^7.1.2"
 attrs = "^21.4.0"
