@@ -10,7 +10,7 @@ app = FastAPI(
     title="FastAPI Pydiator",
     description="FastAPI pydiator integration project",
     version="1.0.0",
-    # root_path="/predictor",
+    root_path="/calculator",
 )
 
 app.add_middleware(
