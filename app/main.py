@@ -1,3 +1,5 @@
+import json
+
 import numpy
 from fastapi import FastAPI, status, APIRouter, HTTPException
 from pydantic import BaseModel
@@ -60,7 +62,7 @@ def get_new_size(size: Size):
                     jeans = df['NewJeans'].to_numpy()
                     sizeFinal = jeans[index]
                     print(sizeFinal)
-                    return sizeFinal
+                    return json.dumps(sizeFinal)
                 else:
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
 
@@ -80,7 +82,7 @@ def get_new_size(size: Size):
                     jeans = df['NewJeans'].to_numpy()
                     sizeFinal = jeans[indexIn]
                     print(sizeFinal)
-                    return sizeFinal
+                    return json.dumps(sizeFinal)
                 else:
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                                 "asesor")
@@ -97,7 +99,7 @@ def get_new_size(size: Size):
                     jeans = df['JeansSBC'].to_numpy()
                     sizeFinal = jeans[index]
                     print(sizeFinal)
-                    return sizeFinal
+                    return json.dumps(sizeFinal)
                 else:
                     raise HTTPException(status_code=400,
                                         detail="La talla no existe, favor de comunicarse con algún asesor")
@@ -112,13 +114,11 @@ def get_new_size(size: Size):
                 print("Indexes WaistIn", indexesWaistIn)
                 indexIn = indexesWaistIn[0]
                 resultHips = HipsIn[indexIn]
-                print("WaistIn", WaistIn)
-                print("HipsIn", HipsIn)
                 if resultHips == size.hips:
                     jeans = df['JeansSBC'].to_numpy()
                     sizeFinal = jeans[indexIn]
                     print(sizeFinal)
-                    return sizeFinal
+                    return json.dumps(sizeFinal)
                 else:
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                                 "asesor")
