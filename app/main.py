@@ -1,6 +1,5 @@
 import json
 
-import numpy
 from fastapi import FastAPI, status, APIRouter, HTTPException
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
