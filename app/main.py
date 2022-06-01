@@ -67,7 +67,7 @@ def get_new_size(size: Size):
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
 
             if size.measure_type == "in":
-                df = pd.read_csv('new_jeans_dataset.csv')
+                df = pd.read_csv('/app/new_jeans_dataset.csv')
                 WaistIn = df['WaistIn'].to_numpy()
                 HipsIn = df['HipsIn'].to_numpy()
                 indexesWaistIn = np.where(WaistIn == size.waist)
@@ -82,7 +82,10 @@ def get_new_size(size: Size):
                     jeans = df['NewJeans'].to_numpy()
                     sizeFinal = jeans[indexIn]
                     print(sizeFinal)
-                    return json.dumps(sizeFinal)
+                    result = sizeFinal.tolist()
+                    print(result)
+                    print(type(result))
+                    return result
                 else:
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                                 "asesor")
@@ -99,7 +102,7 @@ def get_new_size(size: Size):
                     jeans = df['JeansSBC'].to_numpy()
                     sizeFinal = jeans[index]
                     print(sizeFinal)
-                    return json.dumps(sizeFinal)
+                    return json.dumps({sizeFinal})
                 else:
                     raise HTTPException(status_code=400,
                                         detail="La talla no existe, favor de comunicarse con algún asesor")
@@ -118,7 +121,10 @@ def get_new_size(size: Size):
                     jeans = df['JeansSBC'].to_numpy()
                     sizeFinal = jeans[indexIn]
                     print(sizeFinal)
-                    return json.dumps(sizeFinal)
+                    result = sizeFinal.tolist()
+                    print(result)
+                    print(type(result))
+                    return result
                 else:
                     raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                                 "asesor")
