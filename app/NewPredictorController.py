@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class NewPredictorController:
 
     def get_Columns(self):
@@ -9,14 +10,11 @@ class NewPredictorController:
         return waistCol.tolist()
 
     def get_Size(type, waist, hips):
-        match type:
-            case 0:
-                return "zero"
-            case 1:
-                return "one"
-            case 2:
-                return "two"
-            case default:
-                return "something"
-
-
+        if type == 0:
+            return "zero"
+        if type == 1:
+            return "one"
+        if type == 2:
+            return "two"
+        else:
+            return "something"
