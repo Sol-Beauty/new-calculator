@@ -2,10 +2,22 @@
 name = "new-calculator"
 version = "0.1.0"
 description = ""
-authors = ["thedevofthedevil666 <gabriel.verduzco@solbeautyandcare.com>"]
+authors = ["Kenneth Betancourt <kenneth_betancourt@solbeautyandcare.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
+fastapi = "^0.78.0"
+pytest = "^7.1.2"
+attrs = "^21.4.0"
+py = "^1.11.0"
+Jinja2 = "^3.1.2"
+numpy = "^1.22.4"
+pydantic = "^1.9.1"
+pandas = "^1.4.2"
+uvicorn = "^0.17.6"
+requests = "^2.27.1"
+coverage = "^6.4"
+pytest-env = "^0.6.2"
 
 [tool.poetry.dev-dependencies]
 
