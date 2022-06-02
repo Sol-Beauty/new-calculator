@@ -1,8 +1,6 @@
-
 import json
 
 from fastapi import FastAPI, status, APIRouter, HTTPException
-
 
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
@@ -61,8 +59,7 @@ def get_new_size(size: Size):
             if resultHips == size.hips:
                 jeans = df['NewJeans'].to_numpy()
                 sizeFinal = jeans[index]
-                print(sizeFinal)
-                return json.dumps(sizeFinal)
+                return {"sizeFinal": sizeFinal}
             else:
                 raise HTTPException(status_code=400,
                                     detail="La talla no existe, favor de comunicarse con algún asesor")
@@ -82,8 +79,7 @@ def get_new_size(size: Size):
             if resultHips == size.hips:
                 jeans = df['JeansSBC'].to_numpy()
                 sizeFinal = jeans[indexIn]
-                print(sizeFinal)
-                return json.dumps(sizeFinal)
+                return {"sizeFinal": sizeFinal}
             else:
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                             "asesor")
@@ -100,8 +96,10 @@ def get_new_size(size: Size):
             if resultHips == size.hips:
                 jeans = df['JeansSBC'].to_numpy()
                 sizeFinal = jeans[index]
-                print(sizeFinal)
-                return json.dumps(sizeFinal)
+                eval(sizeFinal)
+                result = {"sizeFinal": sizeFinal}
+                print(type(sizeFinal))
+                return result
             else:
                 raise HTTPException(status_code=400,
                                     detail="La talla no existe, favor de comunicarse con algún asesor")
@@ -119,8 +117,7 @@ def get_new_size(size: Size):
             if resultHips == size.hips:
                 jeans = df['JeansSBC'].to_numpy()
                 sizeFinal = jeans[indexIn]
-                print(sizeFinal)
-                return json.dumps(sizeFinal)
+                return {"sizeFinal": sizeFinal}
             else:
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                             "asesor")
