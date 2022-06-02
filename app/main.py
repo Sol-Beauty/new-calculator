@@ -3,7 +3,7 @@ import json
 from fastapi import FastAPI, status, APIRouter, HTTPException
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
-
+import pandas as pd
 from app.NewPredictorController import NewPredictorController
 import numpy as np
 
@@ -22,7 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 router = APIRouter()
-import pandas as pd
 
 
 class Size(BaseModel):
@@ -129,5 +128,4 @@ def get_new_size(size: Size):
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                             "asesor")
     else:
-            raise HTTPException(status_code=404, detail="No hay o existe una opcion por favor elija una para continuar")
-
+        raise HTTPException(status_code=404, detail="No hay o existe una opcion por favor elija una para continuar")

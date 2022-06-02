@@ -3,9 +3,9 @@ py~=1.11.0
 jinja2~=3.1.2
 numpy~=1.22.4
 fastapi~=0.78.0
-pydantic~=1.9.0
+pydantic~=1.9.1
 uvicorn>=0.15.0,<0.16.0
-pandas>=1.0,<=2.0
+pandas~=1.4.2
 
 
 # test
@@ -13,3 +13,9 @@ pytest~=7.0.0
 requests~=2.27.1
 coverage~=6.3.1
 pytest-env~=0.6.2
+starlette~=0.19.1
+pip~=21.3.1
+wheel~=0.37.1
+tornado~=5.1.1
+setuptools~=60.2.0
+future~=0.18.2
