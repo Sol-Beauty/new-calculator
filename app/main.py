@@ -3,9 +3,10 @@ import json
 
 from fastapi import FastAPI, status, APIRouter, HTTPException
 
+
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
-
+import pandas as pd
 from app.NewPredictorController import NewPredictorController
 import numpy as np
 import pandas as pd
@@ -49,88 +50,89 @@ def get_columns():
 
 @app.post("/v2/newcalc", status_code=200)
 def get_new_size(size: Size):
+    if size.type == 0:
 
-    match size.type:
-        # For the new one
-        case 0:
-            if size.measure_type == "cm":
 
-                df = pd.read_csv('/app/new_jeans_dataset.csv')
-                WaistCm = df['WaistCm'].to_numpy()
-                HipsCm = df['HipsCm'].to_numpy()
-                indexesWaist = np.where(WaistCm == size.waist)
-                index = indexesWaist[0][0]
-                resultHips = HipsCm[index]
-                print(resultHips)
-                if resultHips == size.hips:
-                    jeans = df['NewJeans'].to_numpy()
-                    sizeFinal = jeans[index]
-                    print(sizeFinal)
-                    return json.dumps(sizeFinal)
-                else:
-                    raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún asesor")
+        if size.measure_type == "cm":
 
-            if size.measure_type == "in":
-                df = pd.read_csv('/app/new_jeans_dataset.csv')
-                WaistIn = df['WaistIn'].to_numpy()
-                HipsIn = df['HipsIn'].to_numpy()
-                indexesWaistIn = np.where(WaistIn == size.waist)
-                print(size.waist)
-                print(size.hips)
-                print("Indexes WaistIn", indexesWaistIn)
-                indexIn = indexesWaistIn[0]
-                resultHips = HipsIn[indexIn]
-                print("WaistIn", WaistIn)
-                print("HipsIn", HipsIn)
-                if resultHips == size.hips:
-                    jeans = df['NewJeans'].to_numpy()
-                    sizeFinal = jeans[indexIn]
-                    print(sizeFinal)
-                    result = sizeFinal.tolist()
-                    print(result)
-                    print(type(result))
-                    return result
-                else:
-                    raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
-                                                                "asesor")
-        case 1:
-            if size.measure_type == "cm":
-                df = pd.read_csv('/app/new_jeans_dataset.csv')
-                WaistCm = df['WaistCm'].to_numpy()
-                HipsCm = df['HipsCm'].to_numpy()
-                indexesWaist = np.where(WaistCm == size.waist)
-                index = indexesWaist[0][0]
-                resultHips = HipsCm[index]
-                print(resultHips)
-                if resultHips == size.hips:
-                    jeans = df['JeansSBC'].to_numpy()
-                    sizeFinal = jeans[index]
-                    print(sizeFinal)
-                    return json.dumps({sizeFinal})
-                else:
-                    raise HTTPException(status_code=400,
-                                        detail="La talla no existe, favor de comunicarse con algún asesor")
+            df = pd.read_csv('/app/new_jeans_dataset.csv')
+            WaistCm = df['WaistCm'].to_numpy()
+            HipsCm = df['HipsCm'].to_numpy()
+            indexesWaist = np.where(WaistCm == size.waist)
+            index = indexesWaist[0][0]
+            resultHips = HipsCm[index]
+            print(resultHips)
+            if resultHips == size.hips:
+                jeans = df['NewJeans'].to_numpy()
+                sizeFinal = jeans[index]
+                print(sizeFinal)
+                return json.dumps(sizeFinal)
+            else:
+                raise HTTPException(status_code=400,
+                                    detail="La talla no existe, favor de comunicarse con algún asesor")
 
-            if size.measure_type == "in":
-                df = pd.read_csv('new_jeans_dataset.csv')
-                WaistIn = df['WaistIn'].to_numpy()
-                HipsIn = df['HipsIn'].to_numpy()
-                indexesWaistIn = np.where(WaistIn == size.waist)
-                print(size.waist)
-                print(size.hips)
-                print("Indexes WaistIn", indexesWaistIn)
-                indexIn = indexesWaistIn[0]
-                resultHips = HipsIn[indexIn]
-                if resultHips == size.hips:
-                    jeans = df['JeansSBC'].to_numpy()
-                    sizeFinal = jeans[indexIn]
-                    print(sizeFinal)
-                    result = sizeFinal.tolist()
-                    print(result)
-                    print(type(result))
-                    return result
-                else:
-                    raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
-                                                                "asesor")
-        case default:
-            raise HTTPException(status_code=404, detail="No hay o existe una opcion por favor elija una para continuar")
+        if size.measure_type == "in":
+            df = pd.read_csv('/app/new_jeans_dataset.csv')
+            WaistIn = df['WaistIn'].to_numpy()
+            HipsIn = df['HipsIn'].to_numpy()
+            indexesWaistIn = np.where(WaistIn == size.waist)
+            print(size.waist)
+            print(size.hips)
+            print("Indexes WaistIn", indexesWaistIn)
+            indexIn = indexesWaistIn[0]
+            resultHips = HipsIn[indexIn]
+            print("WaistIn", WaistIn)
+            print("HipsIn", HipsIn)
+            if resultHips == size.hips:
+                jeans = df['NewJeans'].to_numpy()
+                sizeFinal = jeans[indexIn]
+                print(sizeFinal)
+                result = sizeFinal.tolist()
+                print(result)
+                print(type(result))
+                return result
+            else:
+                raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
+                                                            "asesor")
+    if size.type == 1:
+
+        if size.measure_type == "cm":
+            df = pd.read_csv('/app/new_jeans_dataset.csv')
+            WaistCm = df['WaistCm'].to_numpy()
+            HipsCm = df['HipsCm'].to_numpy()
+            indexesWaist = np.where(WaistCm == size.waist)
+            index = indexesWaist[0][0]
+            resultHips = HipsCm[index]
+            print(resultHips)
+            if resultHips == size.hips:
+                jeans = df['JeansSBC'].to_numpy()
+                sizeFinal = jeans[index]
+                print(sizeFinal)
+                return json.dumps({sizeFinal})
+            else:
+                raise HTTPException(status_code=400,
+                                    detail="La talla no existe, favor de comunicarse con algún asesor")
+
+        if size.measure_type == "in":
+            df = pd.read_csv('new_jeans_dataset.csv')
+            WaistIn = df['WaistIn'].to_numpy()
+            HipsIn = df['HipsIn'].to_numpy()
+            indexesWaistIn = np.where(WaistIn == size.waist)
+            print(size.waist)
+            print(size.hips)
+            print("Indexes WaistIn", indexesWaistIn)
+            indexIn = indexesWaistIn[0]
+            resultHips = HipsIn[indexIn]
+            if resultHips == size.hips:
+                jeans = df['JeansSBC'].to_numpy()
+                sizeFinal = jeans[indexIn]
+                print(sizeFinal)
+                result = sizeFinal.tolist()
+                print(result)
+                print(type(result))
+                return result
+            else:
+                raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
+                                                            "asesor")
+    else:
+        raise HTTPException(status_code=404, detail="No hay o existe una opcion por favor elija una para continuar")
