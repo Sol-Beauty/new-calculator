@@ -46,78 +46,75 @@ def get_columns():
 
 
 @app.post("/v2/newcalc", status_code=200)
-def get_new_size(size: Size):
-    if size.type == 0:
-        if size.measure_type == "cm":
+def get_new_size(sizetype: Size):
+    if sizetype.type == 0:
+        if sizetype.measure_type == "cm":
             df = pd.read_csv('app/new_jeans_dataset.csv')
             WaistCm = df['WaistCm'].to_numpy()
             HipsCm = df['HipsCm'].to_numpy()
-            indexesWaist = np.where(WaistCm == size.waist)
+            indexesWaist = np.where(WaistCm == sizetype.waist)
             index = indexesWaist[0][0]
             resultHips = HipsCm[index]
             print(resultHips)
-            if resultHips == size.hips:
+            if resultHips == sizetype.hips:
                 jeans = df['NewJeans'].to_numpy()
-                sizeFinal = jeans[index]
-                return {"sizeFinal": sizeFinal}
+                size = jeans[index]
+                return {"size": size}
             else:
                 raise HTTPException(status_code=400,
                                     detail="La talla no existe, favor de comunicarse con algún asesor")
 
-        if size.measure_type == "in":
+        if sizetype.measure_type == "in":
             df = pd.read_csv('app/new_jeans_dataset.csv')
             WaistIn = df['WaistIn'].to_numpy()
             HipsIn = df['HipsIn'].to_numpy()
-            indexesWaistIn = np.where(WaistIn == size.waist)
-            print(size.waist)
-            print(size.hips)
+            indexesWaistIn = np.where(WaistIn == sizetype.waist)
+            print(sizetype.waist)
+            print(sizetype.hips)
             print("Indexes WaistIn", indexesWaistIn)
             indexIn = indexesWaistIn[0][0]
             resultHips = HipsIn[indexIn]
             print("WaistIn", WaistIn)
             print("HipsIn", HipsIn)
-            if resultHips == size.hips:
-                jeans = df['JeansSBC'].to_numpy()
-                sizeFinal = jeans[indexIn]
-                return {"sizeFinal": sizeFinal}
+            if resultHips == sizetype.hips:
+                jeans = df['NewJeans'].to_numpy()
+                size = jeans[indexIn]
+                return {"size": size}
             else:
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                             "asesor")
-    if size.type == 1:
+    if sizetype.type == 1:
 
-        if size.measure_type == "cm":
+        if sizetype.measure_type == "cm":
             df = pd.read_csv('app/new_jeans_dataset.csv')
             WaistCm = df['WaistCm'].to_numpy()
             HipsCm = df['HipsCm'].to_numpy()
-            indexesWaist = np.where(WaistCm == size.waist)
+            indexesWaist = np.where(WaistCm == sizetype.waist)
             index = indexesWaist[0][0]
             resultHips = HipsCm[index]
             print(resultHips)
-            if resultHips == size.hips:
+            if resultHips == sizetype.hips:
                 jeans = df['JeansSBC'].to_numpy()
-                sizeFinal = jeans[index]
-                eval(sizeFinal)
-                result = {"sizeFinal": sizeFinal}
-                print(type(sizeFinal))
-                return result
+                size = jeans[index]
+                return {"size": size}
             else:
                 raise HTTPException(status_code=400,
                                     detail="La talla no existe, favor de comunicarse con algún asesor")
 
-        if size.measure_type == "in":
+        if sizetype.measure_type == "in":
             df = pd.read_csv('app/new_jeans_dataset.csv')
             WaistIn = df['WaistIn'].to_numpy()
             HipsIn = df['HipsIn'].to_numpy()
-            indexesWaistIn = np.where(WaistIn == size.waist)
-            print(size.waist)
-            print(size.hips)
+            indexesWaistIn = np.where(WaistIn == sizetype.waist)
+            print(sizetype.waist)
+            print(sizetype.hips)
             print("Indexes WaistIn", indexesWaistIn)
             indexIn = indexesWaistIn[0][0]
             resultHips = HipsIn[indexIn]
-            if resultHips == size.hips:
+            if resultHips == sizetype.hips:
                 jeans = df['JeansSBC'].to_numpy()
-                sizeFinal = jeans[indexIn]
-                return {"sizeFinal": sizeFinal}
+                size = jeans[indexIn]
+                return {"size": size}
             else:
                 raise HTTPException(status_code=400, detail="La talla no existe, favor de comunicarse con algún "
                                                             "asesor")
